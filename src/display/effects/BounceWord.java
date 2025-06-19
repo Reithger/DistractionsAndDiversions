@@ -57,13 +57,19 @@ public class BounceWord {
 	
 	public int[] iterateMovement() {
 		int newX = (int)(xPos + xMom);
-		if(newX < 0) {
+		if(newX - wordWidth / 2 < 0) {
 			newX = Math.abs(newX);
 			xMom *= -1;
+			if(xMom < 0) {
+				xMom = wordWidth;
+			}
 		}
-		else if(newX + wordWidth >= maxWid) {
-			newX = maxWid - (newX + wordWidth - maxWid);
+		else if(newX + wordWidth / 2 >= maxWid) {
+			newX = maxWid - (newX + wordWidth / 2 - maxWid);
 			xMom *= -.9;
+			if(xMom > 0) {
+				xMom = -wordWidth;
+			}
 		}
 		xMom -= xMom > 0 ? .6 : xMom < 0 ? -.6 : 0;
 		int newY = (int)(yPos + yMom);

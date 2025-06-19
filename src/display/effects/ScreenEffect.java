@@ -66,4 +66,8 @@ public abstract class ScreenEffect {
 		return active;
 	}
 	
+	public String getPhrase() {
+		return activationPhrase;
+	}
+	
 }

@@ -13,6 +13,8 @@ public class BounceWordEffect extends ScreenEffect{
 	private static final Font DEFAULT_FONT = new Font("Sans Serif", Font.BOLD, 32);
 	private static final Color[] DEFAULT_WORD_COLORS = new Color[] {Color.red, Color.orange, Color.yellow, Color.green,
 			Color.blue, Color.magenta, Color.pink, Color.cyan};
+	
+	private static final int MAX_WORDS = 50;
 
 	
 	private ArrayList<BounceWord> words;
@@ -34,8 +36,10 @@ public class BounceWordEffect extends ScreenEffect{
 		int yStart = 0;
 		FontMetrics fm = Toolkit.getDefaultToolkit().getFontMetrics(DEFAULT_FONT);
 		for(String s : in.split(" ")) {
-			words.add(new BounceWord(s, fm.getHeight(), fm.stringWidth(s), spaceWidth, spaceHeight, yStart));
-			yStart -= 3;
+			if(s.length() > 3) {
+				words.add(new BounceWord(s, fm.getHeight(), fm.stringWidth(s + " "), spaceWidth, spaceHeight, yStart));
+				yStart -= 3;
+			}
 		}
 	}
 	
@@ -54,6 +58,9 @@ public class BounceWordEffect extends ScreenEffect{
 		}
 		for(BounceWord bw : toRemove) {
 			words.remove(bw);
+		}
+		if(words.size() > MAX_WORDS) {
+			words.remove(0);
 		}
 	}
 

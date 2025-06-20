@@ -54,6 +54,7 @@ public class TransparentDisplaySpace {
 		effects.get(0).activate();
 		effects.get(0).interpretFinalInput("string of test text for seeing them bounce immediately");
 		
+		/*
 		effects.get(1).activate();
 		effects.get(1).interpretFinalInput("narrator bonfire restored");
 		effects.get(1).interpretFinalInput("next");

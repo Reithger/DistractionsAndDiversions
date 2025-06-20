@@ -15,9 +15,17 @@ public class BounceWordEffect extends ScreenEffect{
 			Color.blue, Color.magenta, Color.pink, Color.cyan};
 	
 	private static final int MAX_WORDS = 50;
+	
+	private static final String JAR_PREFIX = "../../control/assets/";
+	private static final String LOCAL_PREFIX = "/control/assets/";
+	
+	private static final String[] FONTS = new String[] {"Howdybun.ttf", "Orange Gummy.ttf",
+														"Super Adorable.ttf", "SuperMario256.ttf"};
 
 	
 	private ArrayList<BounceWord> words;
+	
+	private ArrayList<Font> fonts;
 	
 	private int spaceWidth;
 	
@@ -45,6 +53,27 @@ public class BounceWordEffect extends ScreenEffect{
 	
 	@Override
 	public void iterate(HandlePanel hp) {
+		if(fonts == null) {
+			fonts = new ArrayList<Font>();
+			for(String s : FONTS) {
+				String nom;
+				try {
+					nom = hp.registerFont(JAR_PREFIX + s);
+				}
+				catch(Exception e) {
+					try {
+						nom = hp.registerFont(LOCAL_PREFIX + s);
+					}
+					catch(Exception e1) {
+						nom = "";
+					}
+				}
+				if(nom != null && !nom.equals("")) {
+					fonts.add(new Font(nom, Font.PLAIN, 22));
+				}
+			}
+			BounceWord.assignFonts(fonts);
+		}
 		ArrayList<BounceWord> toRemove = new ArrayList<BounceWord>();
 		for(BounceWord bw : words) {
 			int[] position = bw.iterateMovement();
@@ -53,7 +82,8 @@ public class BounceWordEffect extends ScreenEffect{
 				toRemove.add(bw);
 			}
 			else {
-				hp.addText(bw.getString() + "_" + bw.getBirth(), 5, "word_bounce", position[0], position[1], (int)(bw.getWordWidth() * 1.2), (int)(bw.getWordHeight() * 1.2), bw.getString(), DEFAULT_FONT, bw.getColor(), false, false, true);
+				Font use = bw.getFont();
+				hp.addText(bw.getString() + "_" + bw.getBirth(), 5, "word_bounce", position[0], position[1], (int)(bw.getWordWidth() * 1.2), (int)(bw.getWordHeight() * 1.2), bw.getString(), use == null ? DEFAULT_FONT : use, bw.getColor(), false, false, true);
 			}
 		}
 		for(BounceWord bw : toRemove) {

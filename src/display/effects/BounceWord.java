@@ -1,11 +1,15 @@
 package display.effects;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BounceWord {
 	
 	private static Color[] colors;
+	
+	private static ArrayList<Font> fonts;
 	
 	private String word;
 	private long birth;
@@ -23,11 +27,13 @@ public class BounceWord {
 	private int wordWidth;
 	
 	private Color col;
+	private Font font;
 	
 	public BounceWord(String in, int wordHei, int wordWid, int wid, int hei, int startY) {
 		birth = System.currentTimeMillis();
 		Random rand = new Random();
 		col = colors[rand.nextInt(colors.length)];
+		font = fonts == null ? null : fonts.get(rand.nextInt(fonts.size()));
 		maxWid = wid;
 		maxHei = hei;
 		xPos = (int)(rand.nextDouble() * wid);
@@ -41,6 +47,10 @@ public class BounceWord {
 	
 	public static void assignColors(Color[] in) {
 		colors = in;
+	}
+	
+	public static void assignFonts(ArrayList<Font> in) {
+		fonts = in;
 	}
 	
 	public Color getColor() {
@@ -104,6 +114,10 @@ public class BounceWord {
 	
 	public double getTotalMomentum() {
 		return xMom + yMom;
+	}
+	
+	public Font getFont() {
+		return font;
 	}
 	
 	@Override

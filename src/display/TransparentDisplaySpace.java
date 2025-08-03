@@ -107,7 +107,7 @@ public class TransparentDisplaySpace {
 		
 		
 		effects.get(1).activate();
-		effects.get(1).interpretFinalInput("narrator Duty Complete");
+		effects.get(1).interpretFinalInput("narrator Distractions Loaded");
 		effects.get(1).interpretFinalInput("next");
 		
 	}

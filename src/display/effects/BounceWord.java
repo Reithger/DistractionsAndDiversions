@@ -38,8 +38,8 @@ public class BounceWord {
 		maxHei = hei;
 		xPos = (int)(rand.nextDouble() * wid);
 		yPos = startY;
-		xMom = (rand.nextDouble() - .5) * 250.0;
-		yMom = 2;
+		xMom = (rand.nextDouble() - .5) * 150.0;
+		yMom = 1;
 		word = in;
 		wordHeight = wordHei;
 		wordWidth = wordWid;
@@ -88,7 +88,7 @@ public class BounceWord {
 			yMom *= -.8;
 			xMom *= .8;
 		}
-		yMom += (Math.abs(yMom) > 15) ? 10 : 5;
+		yMom += (Math.abs(yMom) > 15) ? 8 : 3;
 		
 		if(Math.abs(yMom) < 3 && yPos > maxHei * 14 / 15) {
 			yMom = 0;

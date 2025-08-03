@@ -23,13 +23,15 @@ public class BounceWordEffect extends ScreenEffect{
 														"Super Adorable.ttf", "SuperMario256.ttf"};
 
 	
-	private ArrayList<BounceWord> words;
+	private volatile ArrayList<BounceWord> words;
 	
 	private ArrayList<Font> fonts;
 	
 	private int spaceWidth;
 	
 	private int spaceHeight;
+	
+	private HandlePanel ref;
 	
 	public BounceWordEffect(String activate, int wid, int hei) {
 		super(activate);
@@ -48,6 +50,14 @@ public class BounceWordEffect extends ScreenEffect{
 				words.add(new BounceWord(s, fm.getHeight(), fm.stringWidth(s + " "), spaceWidth, spaceHeight, yStart));
 				yStart -= 3;
 			}
+		}
+	}
+	
+	@Override
+	public void deactivate() {
+		super.deactivate();
+		if(ref != null) {
+			ref.removeElementPrefixed("bounce");
 		}
 	}
 	
@@ -74,22 +84,32 @@ public class BounceWordEffect extends ScreenEffect{
 			}
 			BounceWord.assignFonts(fonts);
 		}
+		if(ref == null) {
+			ref = hp;
+		}
 		ArrayList<BounceWord> toRemove = new ArrayList<BounceWord>();
-		for(BounceWord bw : words) {
-			int[] position = bw.iterateMovement();
+		for(int i = 0; i < words.size(); i++) {
+			BounceWord bw = i < words.size() ? words.get(i) : null;
+			if(bw == null) {
+				continue;
+			}
 			if(bw.getAge() > 10000) {
-				hp.removeElement(bw.getString() + "_" + bw.getBirth());
+				hp.removeElement("bounce_" + bw.toString());
 				toRemove.add(bw);
 			}
 			else {
+				int[] position = bw.iterateMovement();
 				Font use = bw.getFont();
-				hp.addText(bw.getString() + "_" + bw.getBirth(), 5, "word_bounce", position[0], position[1], (int)(bw.getWordWidth() * 1.2), (int)(bw.getWordHeight() * 1.2), bw.getString(), use == null ? DEFAULT_FONT : use, bw.getColor(), false, false, true);
+				hp.addText("bounce_" + bw.toString(), 5, "word_bounce", position[0], position[1], (int)(bw.getWordWidth() * 1.2), (int)(bw.getWordHeight() * 1.2), bw.getString(), use == null ? DEFAULT_FONT : use, bw.getColor(), false, false, true);
 			}
 		}
 		for(BounceWord bw : toRemove) {
+			hp.removeElement("bounce_" + bw.toString());
 			words.remove(bw);
 		}
 		if(words.size() > MAX_WORDS) {
+			BounceWord bw = words.get(0);
+			hp.removeElement("bounce_" + bw.toString());
 			words.remove(0);
 		}
 	}

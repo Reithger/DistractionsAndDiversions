@@ -1,5 +1,7 @@
 package control;
 
+import java.util.ArrayList;
+
 import core.JavaReceiver;
 import display.TransparentDisplaySpace;
 
@@ -42,8 +44,8 @@ public class CaptionReceiver implements JavaReceiver{
 //---  Operations   ---------------------------------------------------------------------------
 	
 	@Override
-	public void receiveSocketData(String socketData) {
-		if(socketData.equals("Keepalive message")) {
+	public void receiveSocketData(String socketData, ArrayList<String> tags) {
+		if(socketData.startsWith("Keepalive message")) {
 			return;
 		}
 		System.out.println("Distractions: " + socketData);

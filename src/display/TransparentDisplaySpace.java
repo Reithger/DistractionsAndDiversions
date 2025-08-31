@@ -89,7 +89,6 @@ public class TransparentDisplaySpace {
 	}
 	
 	private void initializeEffects(int wid, int hei) {
-		System.out.println("Init with: " + wid + " " + hei);
 		if(effects != null) {
 			for(ScreenEffect se : effects) {
 				se.deactivate();

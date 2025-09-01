@@ -41,6 +41,8 @@ public class Core {
 		socket.setInstanceKeepAlive("captions", 2000);
 		socket.setInstanceTimeout("captions", 10000);
 		
+		socket.setInstanceQuiet("captions", true);
+		
 		try {
 			socket.runSocketInstance("captions");
 		} catch (Exception e) {

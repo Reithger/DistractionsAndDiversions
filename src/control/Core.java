@@ -32,6 +32,7 @@ public class Core {
 		
 		socket.setInstanceListenPort("captions", 6000);
 		
+		socket.setValidationQuiet(true);
 		socket.verifySubprogramReady("./distdac/", "StylizedCaptions.jar", "../assets/StylizedCaptions.jar", "/control/assets/StylizedCaptions.jar");		
 		socket.setInstanceSubprogramJava("captions", "./distdac/StylizedCaptions.jar");
 		
@@ -42,6 +43,7 @@ public class Core {
 		socket.setInstanceTimeout("captions", 10000);
 		
 		socket.setInstanceQuiet("captions", true);
+		System.out.println("Should be silent!");
 		
 		try {
 			socket.runSocketInstance("captions");
